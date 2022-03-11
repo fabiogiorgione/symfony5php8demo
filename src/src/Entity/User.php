@@ -8,23 +8,37 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Ramsey\Uuid\Doctrine\UuidGenerator;
 
-#[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\Table(name: '`user`')]
+/**
+ * User
+ * @ORM\Entity (repositoryClass="App\Repository\UserRepository")
+ * @ORM\Table (name="user_data")
+ */
 class User implements UserInterface
 {
-    #[ORM\Id]
-    #[ORM\Column(type: 'uuid')]
-    #[ORM\GeneratedValue]
-    #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
-    private $id_user;
+	/**
+	 * @var \Ramsey\Uuid\UuidInterface
+	 *
+	 * @ORM\Id
+	 * @ORM\Column(type="uuid", unique=true)
+	 * @ORM\GeneratedValue(strategy="CUSTOM")
+	 * @ORM\CustomIdGenerator(class=UuidGenerator::class)
+	 *
+	 */
+    private $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
+	/**
+	 * @ORM\Column(type="string", length: 255)
+	 */
     private $username;
 
-    #[ORM\Column(type: 'string', length: 255)]
+	/**
+	 * @ORM\Column(type="string", length: 255)
+	 */
     private $password;
 
-    #[ORM\Column(type: 'string', length: 255)]
+	/**
+	 * @ORM\Column(type="string", length: 255)
+	 */
     private $email;
 
     /**
@@ -44,14 +58,14 @@ class User implements UserInterface
      */
     private UserGroup $userGroup;
 
-    public function getIdUser()
+    public function getId()
     {
-        return $this->id_user;
+        return $this->id;
     }
 
-    public function setIdUser($id_user): self
+    public function setId($id): self
     {
-        $this->id_user = $id_user;
+        $this->id = $id;
 
         return $this;
     }
