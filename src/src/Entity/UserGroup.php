@@ -2,43 +2,33 @@
 
 namespace App\Entity;
 
-use App\Repository\UserGroupRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Doctrine\UuidGenerator;
+use Doctrine\Common\Collections\Collection;
 
-#[ORM\Entity(repositoryClass: UserGroupRepository::class)]
+/**
+ * User
+ * @ORM\Table(name="usergroup")
+ * @ORM\Entity()
+ */
 class UserGroup
 {
-    #[ORM\Id]
-    #[ORM\Column(type: 'uuid')]
-    #[ORM\GeneratedValue]
-    #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
-    private $id_group;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private $name;
+    /**
+     * @var \Ramsey\Uuid\UuidInterface
+     *
+     * @ORM\Id
+     * @ORM\Column(type="uuid", unique=true)
+     * @ORM\GeneratedValue(strategy="CUSTOM")
+     * @ORM\CustomIdGenerator(class=UuidGenerator::class)
+     *
+     */
+    private $id;
 
-    public function getIdGroup()
-    {
-        return $this->id_group;
-    }
-
-    public function setIdGroup($id_group): self
-    {
-        $this->id_group = $id_group;
-
-        return $this;
-    }
-
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    public function setName($name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
+    /**
+     * Many users groups have many users
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="userGroups")
+     */
+    private Collection $users;
 }
