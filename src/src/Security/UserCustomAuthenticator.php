@@ -53,12 +53,15 @@ class UserCustomAuthenticator extends AbstractFormLoginAuthenticator implements 
 
 
 	public function getCredentials(Request $request) {
+        $loginArray = $request->request->get('login', []);
 		$this->arr   = [
-			'username'   => $request->request->get('username'),
-			'password'   => $request->request->get('password'),
-			'csrf_token' => $request->request->get('_csrf_token'),
+			'username'   => array_key_exists('username', $loginArray)?$loginArray['username']:'',
+			'password'   => array_key_exists('password', $loginArray)?$loginArray['password']:'',
+			'csrf_token' => array_key_exists('_token', $loginArray)?$loginArray['_token']:''
 		];
-		$credentials = $this->arr;
+
+        $credentials = $this->arr;
+
 		$request->getSession()->set(
 			Security::LAST_USERNAME,
 			$credentials['username']
@@ -70,10 +73,11 @@ class UserCustomAuthenticator extends AbstractFormLoginAuthenticator implements 
 
 
 	public function getUser($credentials, UserProviderInterface $userProvider): ?User {
-		$token = new CsrfToken('authenticate', $credentials['csrf_token']);
-		if (!$this->csrfTokenManager->isTokenValid($token)) {
-			throw new InvalidCsrfTokenException;
-		}
+//		ora gestito dal form
+//      $token = new CsrfToken('authenticate', $credentials['csrf_token']);
+//		if (!$this->csrfTokenManager->isTokenValid($token)) {
+//			throw new InvalidCsrfTokenException;
+//		}
 
 		$user = $this->entityManager->getRepository(User::class)->findOneBy(['username' => $credentials['username']]);
 
