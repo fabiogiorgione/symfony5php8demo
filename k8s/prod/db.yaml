@@ -18,8 +18,9 @@ spec:
           ports:
             - containerPort: 5432
           env:
-            - name: ROOT_PASSWORD
-              value: password
+            - name: container-db-password
+            - name: container-db-user
+            - name: container-db-name
 ---
 apiVersion: v1
 kind: Service

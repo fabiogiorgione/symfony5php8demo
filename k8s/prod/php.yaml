@@ -14,12 +14,14 @@ spec:
     spec:
       containers:
         - name: php
-          image: hseevo.azurecr.io/phpdemo:latest
+          image: hseevo.azurecr.io/php-fpm:latest
           ports:
             - containerPort: 9000
           env:
-            - name: DATABASE_URL
-              value: mysql://root:password@mariadb:3306/symfony
+            - name: container-app-database_name
+            - name: container-app-database_host
+            - name: container-app-database_port
+            - name: container-app-database_password
 ---
 apiVersion: v1
 kind: Service

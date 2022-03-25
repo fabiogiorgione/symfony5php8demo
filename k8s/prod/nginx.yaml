@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: hseevo.azurecr.io/nginxdemo:latest
+          image: hseevo.azurecr.io/nginx:latest
           ports:
             - containerPort: 80
 ---
