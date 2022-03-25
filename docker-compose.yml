@@ -13,6 +13,7 @@ services:
       - 15432:5432
 
   php-fpm:
+    image: symfonyk8s.azurecr.io/php-fpm:${TAG}
     container_name: php-fpm
     build:
       context: ./docker/php-fpm
@@ -29,6 +30,7 @@ services:
     volumes:
       - ./src/:/var/www
   nginx:
+    image: symfonyk8s.azurecr.io/nginx:${TAG}
     container_name: nginx
     build:
       context: ./docker/nginx

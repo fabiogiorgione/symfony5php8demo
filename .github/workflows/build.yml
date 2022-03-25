@@ -4,10 +4,10 @@ name: CI DEMO azureaks-test build
 # Controls when the action will run. 
 on:
   # Triggers the workflow on push or pull request events but only for the develop branch
-  push:
-    branches: [ develop ]
-  pull_request:
-    branches: [ develop ]
+#  push:
+#    branches: [ master ]
+#  pull_request:
+#    branches: [ master ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -26,9 +26,7 @@ jobs:
 
       - uses: Azure/docker-login@v1
         with:
-          login-server: hseevo.azurecr.io
-          username: ${{ secrets.REGISTRY_USERNAME }}
-          password: ${{ secrets.REGISTRY_PASSWORD }}
+          login-server: symfonyk8s.azurecr.io
         
       - name: "build and deploy"   
         run: |
